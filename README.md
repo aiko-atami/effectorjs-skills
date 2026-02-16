@@ -35,20 +35,13 @@ skills/effectorjs/
     checklists.md
 ```
 
-## Install (from GitHub)
+## Install
 
-Use your `npx skills` flow to install this skill directly from the repository.
-
-Example:
+Use `npx skills` to install this skill:
 
 ```bash
-npx skills install aiko-atami/effectorjs-skills --skill effectorjs
+npx skills add aiko-atami/effectorjs-skills --skill effectorjs
 ```
-
-If your runtime supports selecting a specific skill path, use:
-
-- Skill path: `skills/effectorjs`
-- Skill name: `effectorjs`
 
 ## When to Use
 
