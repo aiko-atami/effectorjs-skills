@@ -8,6 +8,7 @@ This repository supports multiple skills using a consistent structure.
 | Skill | Focus | Target Version | Path |
 | --- | --- | --- | --- |
 | `effectorjs` | Architecture, refactoring, reviews, and SSR in Effector | Effector v23+ | `skills/effectorjs` |
+| `effector-storage` | Persistence adapter selection, sync semantics, and contract-aware storage wiring | effector-storage v7.x | `skills/effector-storage` |
 | `patronum` | Patronum operator selection and usage in Effector projects | Patronum v2.x | `skills/patronum` |
 
 ## Install
@@ -17,6 +18,9 @@ Install via `npx skills`:
 ```bash
 # Effector core skill
 npx skills add aiko-atami/effectorjs-skills --skill effectorjs
+
+# Effector Storage skill
+npx skills add aiko-atami/effectorjs-skills --skill effector-storage
 
 # Patronum skill
 npx skills add aiko-atami/effectorjs-skills --skill patronum
@@ -48,18 +52,13 @@ Documentation:
 - `skills/patronum/README.md`
 - `skills/patronum/SKILL.md`
 
-## Repository Structure
+### `effector-storage`
 
-```text
-skills/
-  effectorjs/
-    SKILL.md
-    README.md
-    agents/openai.yaml
-    references/...
-  patronum/
-    SKILL.md
-    README.md
-    agents/openai.yaml
-    references/...
-```
+Use when:
+- Choosing storage adapters (`local`, `session`, `query`, `broadcast`, `memory`, etc.)
+- Wiring `persist` / `createPersist` with `clock`, `pickup`, `context`, and `keyPrefix`
+- Validating persisted data with contracts and handling `done` / `fail` / `finally`
+- Designing SSR-safe fallback behavior with tools like `either` and `async`
+
+Documentation:
+- `skills/effector-storage/SKILL.md`
