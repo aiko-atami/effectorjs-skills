@@ -1,68 +1,65 @@
-# EffectorJS skill
+# Effector Ecosystem Skills
 
-Universal AI skill for designing, refactoring, and reviewing **Effector** state management with modern, scope-safe patterns.
+AI skills for tasks around **Effector** and related libraries.
+This repository supports multiple skills using a consistent structure.
 
-This skill is intended for agent workflows (Codex, Claude Code, and similar runtimes that support skills from GitHub repositories).
+## Skill Catalog
 
-## What This Skill Covers
+| Skill | Focus | Target Version | Path |
+| --- | --- | --- | --- |
+| `effectorjs` | Architecture, refactoring, reviews, and SSR in Effector | Effector v23+ | `skills/effectorjs` |
+| `patronum` | Patronum operator selection and usage in Effector projects | Patronum v2.x | `skills/patronum` |
 
-- Effector model design with `createStore`, `createEvent`, `createEffect`
-- Declarative orchestration with `sample`, `attach`, and `split`
-- SSR and scope safety with `fork`, `allSettled`, `serialize`, `hydrate`
-- React integration (`useUnit`, `Provider`)
-- Solid and Vue integration references
-- Anti-pattern detection and refactoring guidance
-- Legacy-to-modern migration map (v23+ defaults)
+## Install
 
-## Target Version
+Install via `npx skills`:
 
-- Default target: **Effector v23+**
-- Legacy code is supported through migration guidance, but legacy APIs are not recommended as defaults.
+```bash
+# Effector core skill
+npx skills add aiko-atami/effectorjs-skills --skill effectorjs
+
+# Patronum skill
+npx skills add aiko-atami/effectorjs-skills --skill patronum
+```
+
+## Skills
+
+### `effectorjs`
+
+Use when:
+- Designing models (`createStore`, `createEvent`, `createEffect`)
+- Building declarative dataflow (`sample`, `attach`, `split`)
+- Working with SSR/scope (`fork`, `allSettled`, `serialize`, `hydrate`)
+- Refactoring anti-patterns and migrating legacy APIs
+
+Documentation:
+- `skills/effectorjs/README.md`
+- `skills/effectorjs/SKILL.md`
+
+### `patronum`
+
+Use when:
+- Choosing the right Patronum operator for a task
+- Applying practical recipes in Effector code
+- Explaining signatures, caveats, and overload behavior
+- Migrating legacy Patronum usage to v2 shorthand
+
+Documentation:
+- `skills/patronum/README.md`
+- `skills/patronum/SKILL.md`
 
 ## Repository Structure
 
 ```text
-skills/effectorjs/
-  SKILL.md
-  agents/openai.yaml
-  references/
-    core-patterns.md
-    react-ssr-scope.md
-    solid-scope.md
-    vue-scope.md
-    anti-patterns-and-fixes.md
-    legacy-migration-map.md
-    checklists.md
+skills/
+  effectorjs/
+    SKILL.md
+    README.md
+    agents/openai.yaml
+    references/...
+  patronum/
+    SKILL.md
+    README.md
+    agents/openai.yaml
+    references/...
 ```
-
-## Install
-
-Use `npx skills` to install this skill:
-
-```bash
-npx skills add aiko-atami/effectorjs-skills --skill effectorjs
-```
-
-## When to Use
-
-Use this skill when you need to:
-
-- Design a new Effector model from scratch
-- Refactor imperative or fragile Effector logic
-- Add/repair SSR scope isolation
-- Review Effector code for risks and regressions
-- Migrate legacy Effector patterns to modern v23+ style
-
-## Example Prompts
-
-- "Design an Effector model for a paginated product list with retry and optimistic updates."
-- "Refactor this model to remove `watch` business logic and `getState` reads."
-- "Make this React SSR flow scope-safe using fork/allSettled/serialize/hydrate."
-- "Migrate legacy `forward/guard` chains to modern `sample`-based flows."
-- "Review this Effector module and list regressions, anti-patterns, and missing tests."
-
-## Notes
-
-- The skill prioritizes deterministic, declarative dataflow.
-- It encourages small atomic stores and explicit unit topology.
-- It includes acceptance checklists for design, refactor, SSR, review, and migration tasks.
