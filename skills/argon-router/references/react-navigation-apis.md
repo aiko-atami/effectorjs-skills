@@ -35,6 +35,12 @@ function PostCard({ id }: { id: number }) {
 }
 ```
 
+`useLink` contract:
+- call shape: `useLink(route, params)`
+- returns `{ path, onOpen }`
+- `path` is built using router `knownRoutes`
+- throws when route is not registered in router
+
 ## Router Hooks
 
 - `useRouter()` returns router with store values already bound (good default).

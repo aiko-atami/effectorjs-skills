@@ -1,6 +1,6 @@
 ---
 name: argon-router
-description: Integrate and use argon-router in React web applications with Effector. Use when tasks involve creating routes and routers, wiring RouterControls/history, composing routes with chainRoute/group/createVirtualRoute, rendering views with RouterProvider/createRoutesView/Outlet, building links with useLink, and managing URL query state with trackQuery and @argon-router/paths.
+description: Integrate and use argon-router in React web applications with Effector. Use when tasks involve creating routes and routers, wiring RouterControls/history adapters, composing routes with chainRoute/group/createVirtualRoute, rendering views with RouterProvider/createRoutesView/Outlet, building links with Link/useLink, and managing URL query state with trackQuery and @argon-router/paths.
 ---
 
 # Argon Router
@@ -33,17 +33,24 @@ Use this skill to implement argon-router in React web apps with predictable Effe
 - Add `references/examples.md` for copyable happy-path scaffolds.
 - End with `references/checklist.md` before final output.
 
-3. Build in this order:
+3. Resolve source of truth before implementation:
+- Prefer `../argon-router/packages/*/lib/*.ts` and package `lib/index.ts` exports.
+- Use docs as explanatory context and examples.
+- If docs and code differ, follow code behavior and note mismatch briefly.
+
+4. Build in this order:
 - Define route units with explicit paths and params.
 - Create router controls and initialize history adapter.
-- Create router with known routes and optional base.
-- Create React route views and wire `RouterProvider` + `createRoutesView`.
-- Add link/navigation actions via route `open` and `useLink`.
+- Create router with known routes, optional base, and explicit pathless mapping (`{ path, route }`) when needed.
+- Create React route views and wire `RouterProvider` + `createRoutesView` (add `otherwise` when fallback behavior is required).
+- Add link/navigation actions via route `open` and `Link` first.
+- Use `useLink` only for custom interaction surfaces.
+- Add dynamic registration (`router.registerRoute(...)`) only if runtime extension is required.
 - Add query trackers only when URL query behavior is required.
 - Add route composition (`chainRoute`, `group`) after baseline routing works.
 - Add lazy/layout organization (`createLazyRouteView`, `withLayout`) when route tree is stable.
 
-4. Produce output contract:
+5. Produce output contract:
 - Router topology: routes, router, controls, view mapping.
 - Wiring snippets for navigation and query flows.
 - Notes for params/path DSL used by each route.
@@ -62,9 +69,11 @@ Use this skill to implement argon-router in React web apps with predictable Effe
 ## Guardrails
 
 - Initialize controls with `setHistory` before expecting route activation from URL changes.
+- Pass router adapters to `setHistory` (`historyAdapter(...)` or `queryAdapter(...)`), not raw history objects.
 - Ensure every route used by `useLink` is registered in `createRouter({ routes })`.
 - Keep route paths deterministic; avoid ambiguous wildcard-heavy patterns unless required.
 - Model query state through `trackQuery`, not ad-hoc parsing in components.
 - Keep view rendering centralized in `createRoutesView` and `Outlet` composition.
+- Add `createRoutesView({ otherwise })` when no-match fallback is part of requirements.
 - Use `historyAdapter` for pathname routing and `queryAdapter` for secondary/modal/tab routing.
 - For SSR/testing, initialize router in scope with `allSettled(router.setHistory, { params: historyAdapter(createMemoryHistory(...)) })`.

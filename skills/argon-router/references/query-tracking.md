@@ -6,11 +6,13 @@ Map URL query parameters to typed feature flows.
 
 ## API Shape
 
-`router.trackQuery({ parameters, forRoutes? })` returns:
+`router.trackQuery({ parameters, forRoutes?, check? })` returns:
 - `enter(payload)` to write query params.
 - `entered(payload)` event when URL query matches schema.
 - `exit({ ignoreParams? })` to clear query params.
 - `exited` event when query leaves valid state.
+
+`controls.trackQuery({ parameters, check? })` is also available (without `forRoutes`).
 
 ## Basic Pattern
 
@@ -22,6 +24,7 @@ const postsFilterQuery = router.trackQuery({
     page: z.coerce.number().optional(),
     q: z.string().optional(),
   }),
+  check: filtersApplyRequested,
   forRoutes: [postRoute],
 });
 ```
@@ -40,6 +43,16 @@ sample({
 sample({
   clock: clearFilterClicked,
   target: postsFilterQuery.exit,
+});
+```
+
+## Controls Pattern
+
+```ts
+const controlsFilters = controls.trackQuery({
+  parameters: z.object({
+    tab: z.enum(['overview', 'comments']).optional(),
+  }),
 });
 ```
 

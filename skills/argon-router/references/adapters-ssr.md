@@ -20,6 +20,8 @@ const router = createRouter({ routes: [homeRoute, profileRoute] });
 router.setHistory(historyAdapter(createBrowserHistory()));
 ```
 
+Do not pass raw history (`createBrowserHistory()`) directly into `setHistory`.
+
 ## Scoped Initialization (SSR/Tests)
 
 ```ts

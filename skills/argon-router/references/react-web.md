@@ -10,7 +10,8 @@ Render route-aware UI in React using `@argon-router/react`.
 - `createRouteView` maps route to component (optionally with layout).
 - `createRoutesView` renders currently opened view chain.
 - `Outlet` renders nested child route views.
-- `useLink` builds href and open handler for a route.
+- `Link` is the default navigation component.
+- `useLink` builds href and open handler for custom interactions.
 
 ## Setup Pattern
 
@@ -38,12 +39,41 @@ export function App() {
 ## Link Pattern
 
 ```tsx
+import { Link } from '@argon-router/react';
+
+<Link to={postRoute} params={{ id: 10 }} query={{ tab: 'comments' }}>
+  Open post
+</Link>;
+```
+
+## Custom Link Pattern (`useLink`)
+
+```tsx
 import { useLink } from '@argon-router/react';
 
-function PostLink({ id }: { id: number }) {
+function PostCard({ id }: { id: number }) {
   const { path, onOpen } = useLink(postRoute, { id });
-  return <a href={path} onClick={(e) => { e.preventDefault(); onOpen({ params: { id } }); }}>Open</a>;
+  return (
+    <a
+      href={path}
+      onClick={(e) => {
+        e.preventDefault();
+        onOpen({ params: { id } });
+      }}
+    >
+      Post {id}
+    </a>
+  );
 }
+```
+
+## Fallback Pattern (`otherwise`)
+
+```tsx
+const RoutesView = createRoutesView({
+  routes: [HomeView, PostView],
+  otherwise: NotFoundPage,
+});
 ```
 
 ## Nested Views Pattern
@@ -65,3 +95,4 @@ function ProfileLayout() {
 
 - `useLink` throws if route is not present in router known routes.
 - Keep one root `RouterProvider` per router tree.
+- `Link` preserves browser default behavior for modifier keys and non-`_self` target.

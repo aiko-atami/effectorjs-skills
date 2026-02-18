@@ -16,7 +16,22 @@ export const router = createRouter({
 });
 ```
 
-## Example 2: Params + Link
+## Example 2: Pathless Route Mapping + Dynamic Registration
+
+```ts
+const dialogRoute = createRoute<{ id: string }>();
+
+const router = createRouter({
+  routes: [
+    homeRoute,
+    { path: '/dialog/:id', route: dialogRoute },
+  ],
+});
+
+router.registerRoute(createRoute({ path: '/settings' }));
+```
+
+## Example 3: Params + Link
 
 ```tsx
 const postRoute = createRoute({ path: '/posts/:id<number>' });
@@ -27,7 +42,7 @@ function Card({ id }: { id: number }) {
 }
 ```
 
-## Example 3: Nested Route with Outlet
+## Example 4: Nested Route with Outlet
 
 ```tsx
 const profileRoute = createRoute({ path: '/profile/:id<number>' });
@@ -43,7 +58,16 @@ function ProfilePage() {
 }
 ```
 
-## Example 4: Query Filters
+## Example 5: Routes View with Fallback
+
+```tsx
+const RoutesView = createRoutesView({
+  routes: [HomeView, ProfileView],
+  otherwise: NotFoundView,
+});
+```
+
+## Example 6: Query Filters
 
 ```ts
 const filters = router.trackQuery({

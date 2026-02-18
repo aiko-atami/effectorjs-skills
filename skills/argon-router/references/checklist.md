@@ -3,6 +3,7 @@
 ## Routing Graph
 
 - All routes used in UI are registered in `createRouter({ routes })`.
+- Pathless routes are registered via `{ path, route }`.
 - `createRouterControls` is used and initialized with history via `setHistory`.
 - Base path behavior is verified when `base` is configured.
 
@@ -11,6 +12,7 @@
 - App root is wrapped with `RouterProvider`.
 - Every screen is created through `createRouteView`.
 - `createRoutesView` receives the full route view list.
+- `createRoutesView({ otherwise })` is configured when no-match fallback is required.
 - Parent views that own nested routes include `Outlet`.
 - `Link` is used for standard navigation; `useLink` only for custom interactions.
 - `useRouter`/`useRouterContext` choice is explicit (bound values vs raw stores).
@@ -21,6 +23,7 @@
 - Route navigation uses `route.open(...)` or `useLink`.
 - `useLink` targets exist in router known routes.
 - Query changes use `trackQuery.enter/exit`, not manual string concatenation.
+- `trackQuery` variant is selected intentionally: `router.trackQuery` (with optional `forRoutes`) vs `controls.trackQuery` (without `forRoutes`).
 - `replace: true` is used for high-frequency query/filter writes.
 
 ## Paths and Params
@@ -38,6 +41,7 @@
 ## Adapters and SSR
 
 - Router is initialized via `setHistory` before route activity is expected.
+- `setHistory` receives adapter instances (`historyAdapter(...)` / `queryAdapter(...)`), not raw history.
 - Adapter choice is intentional: `historyAdapter` for pathname, `queryAdapter` for query-based subnavigation.
 - SSR/tests initialize history in scope via `allSettled(..., { scope, params })`.
 

@@ -7,8 +7,15 @@ Build the minimal routing graph: routes, controls, router, navigation.
 ## Main Units
 
 - `createRoute` from `@argon-router/core` creates path or pathless routes.
-- `createRouterControls` creates `$path`, `$query`, `navigate`, `setHistory`, `back`, `forward`.
+- `createRouterControls` creates `$path`, `$query`, `$history`, `$locationState`, `navigate`, `setHistory`, `back`, `forward`, `locationUpdated`, `trackQuery`.
 - `createRouter` binds controls to routes and opens/closes routes by URL.
+
+## Router Input Route Types
+
+`createRouter({ routes })` accepts:
+- path routes: `createRoute({ path: '/path' })`
+- pathless route mapping: `{ path: '/path', route: somePathlessRoute }`
+- nested routers: `anotherRouter`
 
 ## Minimal Setup Sequence
 
@@ -20,19 +27,30 @@ Build the minimal routing graph: routes, controls, router, navigation.
 ## Baseline Example
 
 ```ts
-import { createRoute, createRouter, createRouterControls } from '@argon-router/core';
+import {
+  createRoute,
+  createRouter,
+  createRouterControls,
+  historyAdapter,
+} from '@argon-router/core';
+import { createBrowserHistory } from 'history';
 
 export const homeRoute = createRoute({ path: '/' });
 export const postRoute = createRoute({ path: '/posts/:id<number>' });
+export const modalRoute = createRoute<{ id: string }>();
 
 export const controls = createRouterControls();
 
 export const router = createRouter({
-  routes: [homeRoute, postRoute],
+  routes: [
+    homeRoute,
+    postRoute,
+    { path: '/modal/:id', route: modalRoute },
+  ],
   controls,
 });
 
-// At app bootstrap: router.setHistory(browserHistoryAdapter)
+router.setHistory(historyAdapter(createBrowserHistory()));
 ```
 
 ## Parent/Child Route Pattern
@@ -59,3 +77,6 @@ Prefer route-centric navigation from feature logic and router-centric navigation
 - Router matches URL to routes via compiled path parsers.
 - Route open flow supports `beforeOpen` effects for preconditions.
 - `$isPending` comes from route open effect pending state.
+- Dynamic extension is possible with `router.registerRoute(...)`.
+- `router.ownRoutes` contains routes owned by this router only.
+- Use `router.knownRoutes` to reason about route presence (for example with `useLink` constraints).
