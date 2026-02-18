@@ -1,64 +1,78 @@
 # Effector Ecosystem Skills
 
-AI skills for tasks around **Effector** and related libraries.
-This repository supports multiple skills using a consistent structure.
+- [effectorjs](#effectorjs)
+- [effector-storage](#effector-storage)
+- [patronum](#patronum)
+- [argon-router](#argon-router)
 
-## Skill Catalog
+## effectorjs
 
-| Skill | Focus | Target Version | Path |
-| --- | --- | --- | --- |
-| `effectorjs` | Architecture, refactoring, reviews, and SSR in Effector | Effector v23+ | `skills/effectorjs` |
-| `effector-storage` | Persistence adapter selection, sync semantics, and contract-aware storage wiring | effector-storage v7.x | `skills/effector-storage` |
-| `patronum` | Patronum operator selection and usage in Effector projects | Patronum v2.x | `skills/patronum` |
+Skill for Effector v23+ architecture, modeling, refactoring, and SSR-safe patterns.
 
-## Install
+Use when you need to:
+- Design stores/events/effects and declarative dataflow (`sample`, `attach`, `split`)
+- Refactor anti-patterns and legacy usage
+- Build scope-safe SSR/test flows (`fork`, `allSettled`, `serialize`, `hydrate`)
 
-Install via `npx skills`:
+Docs:
+- `skills/effectorjs/SKILL.md`
+- `skills/effectorjs/README.md`
 
+Install command:
 ```bash
-# Effector core skill
 npx skills add aiko-atami/effectorjs-skills --skill effectorjs
+```
 
-# Effector Storage skill
+## effector-storage
+
+Skill for persistence strategies with `effector-storage` v7.x and contract-aware storage flows.
+
+Use when you need to:
+- Choose adapters (`local`, `session`, `query`, `broadcast`, `memory`)
+- Configure `persist` / `createPersist` with `clock`, `pickup`, `context`
+- Handle validation and persistence lifecycle (`done` / `fail` / `finally`)
+
+Docs:
+- `skills/effector-storage/SKILL.md`
+
+Install command:
+```bash
 npx skills add aiko-atami/effectorjs-skills --skill effector-storage
+```
 
-# Patronum skill
+## patronum
+
+Skill for selecting and applying Patronum operators in Effector projects.
+
+Use when you need to:
+- Pick the right Patronum operator for a dataflow task
+- Apply practical operator recipes and caveats
+- Migrate older Patronum usage to v2 shorthand
+
+Docs:
+- `skills/patronum/SKILL.md`
+- `skills/patronum/README.md`
+
+Install command:
+```bash
 npx skills add aiko-atami/effectorjs-skills --skill patronum
 ```
 
-## Skills
+## argon-router
 
-### `effectorjs`
+How-to skill for React web integration of `@argon-router/core`, `@argon-router/react`, and `@argon-router/paths`.
 
-Use when:
-- Designing models (`createStore`, `createEvent`, `createEffect`)
-- Building declarative dataflow (`sample`, `attach`, `split`)
-- Working with SSR/scope (`fork`, `allSettled`, `serialize`, `hydrate`)
-- Refactoring anti-patterns and migrating legacy APIs
+Use when you need to:
+- Configure routes, router, and controls
+- Build route views with `RouterProvider`, `createRouteView`, `createRoutesView`, `Outlet`
+- Add typed path params and query tracking
+- Compose routes via `chainRoute`, `group`, `createVirtualRoute`
 
-Documentation:
-- `skills/effectorjs/README.md`
-- `skills/effectorjs/SKILL.md`
+Docs:
+- `skills/argon-router/SKILL.md`
+- `skills/argon-router/references/*`
 
-### `patronum`
-
-Use when:
-- Choosing the right Patronum operator for a task
-- Applying practical recipes in Effector code
-- Explaining signatures, caveats, and overload behavior
-- Migrating legacy Patronum usage to v2 shorthand
-
-Documentation:
-- `skills/patronum/README.md`
-- `skills/patronum/SKILL.md`
-
-### `effector-storage`
-
-Use when:
-- Choosing storage adapters (`local`, `session`, `query`, `broadcast`, `memory`, etc.)
-- Wiring `persist` / `createPersist` with `clock`, `pickup`, `context`, and `keyPrefix`
-- Validating persisted data with contracts and handling `done` / `fail` / `finally`
-- Designing SSR-safe fallback behavior with tools like `either` and `async`
-
-Documentation:
-- `skills/effector-storage/SKILL.md`
+Install command:
+```bash
+npx skills add aiko-atami/effectorjs-skills --skill argon-router
+```

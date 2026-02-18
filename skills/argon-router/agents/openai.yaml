@@ -1,0 +1,4 @@
+interface:
+  display_name: "Argon Router"
+  short_description: "How-to integration guide for argon-router in React web apps"
+  default_prompt: "Integrate argon-router into a React web app with route setup, views, links, and query tracking."
