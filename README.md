@@ -60,11 +60,12 @@ npx skills add aiko-atami/effectorjs-skills --skill patronum
 
 ## argon-router
 
-How-to skill for React web integration of `@argon-router/core`, `@argon-router/react`, and `@argon-router/paths`.
+How-to skill for React web and React Native integration of `@argon-router/core`, `@argon-router/react`, `@argon-router/paths`, and `@argon-router/react-native`.
 
 Use when you need to:
 - Configure routes, router, and controls
 - Build route views with `RouterProvider`, `createRouteView`, `createRoutesView`, `Outlet`
+- Integrate native navigation via React Navigation stack/tabs adapters
 - Add typed path params and query tracking
 - Compose routes via `chainRoute`, `group`, `createVirtualRoute`
 
