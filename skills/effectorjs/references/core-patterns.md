@@ -6,6 +6,7 @@
 2. Use events for domain facts and user intents.
 3. Use effects for all side effects and async boundaries.
 4. Keep module-level static unit initialization.
+5. Use explicit startup events (`appStarted`) for runtime bootstrap.
 
 ## 2. Recommended Dataflow
 

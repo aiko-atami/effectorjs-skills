@@ -18,6 +18,7 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 
 2. Load only required references:
 - Always start with `references/core-patterns.md`.
+- Add `references/explicit-start.md` when task touches app bootstrap, startup logic, initialization order, tests, scope, or SSR.
 - Add `references/react-ssr-scope.md` when React/SSR/scope appears.
 - Add `references/solid-scope.md` when Solid integration appears.
 - Add `references/vue-scope.md` when Vue integration appears.
@@ -27,9 +28,10 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 
 3. Build solution in this order:
 - Model atomic stores and explicit events.
+- Define explicit app start (`appStarted`) and keep startup wiring declarative.
 - Move side effects to effects.
 - Connect units with `sample` first; use `attach` for effect composition.
-- Apply scope-first rules (`fork`, `allSettled`) for tests and SSR.
+- Apply scope-first rules (`fork`, `allSettled`) for tests, SPA bootstrap boundaries, and SSR.
 - For UI frameworks, use `useUnit` and correct provider wiring.
 
 4. Produce output contract:

@@ -1,4 +1,4 @@
-# React + SSR + Scope
+# React + Scope + SSR
 
 ## 1. Scope-First Rule
 
@@ -6,10 +6,17 @@ Assume scope usage by default, even for apps currently running without SSR.
 
 Use cases:
 - SSR request isolation.
+- SPA bootstrap boundaries and deterministic startup.
 - Parallel tests without state leaks.
 - Predictable event/effect execution boundaries.
 
-## 2. Canonical SSR Flow
+## 2. Explicit Start in React Apps
+
+- Declare `appStarted` in model and wire startup through `sample`.
+- Trigger startup from entry layer, not from import side effects.
+- For deterministic bootstrap, use `allSettled(appStarted, { scope })` before render/hydrate.
+
+## 3. Canonical SSR Flow
 
 Server:
 1. `fork()` new scope per request.
@@ -21,7 +28,7 @@ Client:
 1. `fork({ values })` from server payload.
 2. Hydrate app under `<Provider value={scope}>`.
 
-## 3. React Integration
+## 4. React Integration
 
 Use `useUnit` as the default interface from UI to model.
 
@@ -39,7 +46,7 @@ Guidelines:
 - Bind events/effects via `useUnit(eventOrFx)`.
 - Keep business logic in model, not in components.
 
-## 4. Scope Loss Prevention
+## 5. Scope Loss Prevention
 
 - When effects call effects, keep calls synchronous and awaited.
 - Avoid mixing arbitrary async gaps with imperative unit calls.
@@ -50,7 +57,7 @@ Risk pattern:
 2. Later imperatively calls another effect/event.
 3. Execution loses expected scope context.
 
-## 5. Testing Pattern
+## 6. Testing Pattern
 
 Use forked scopes for isolated test execution.
 
@@ -65,7 +72,7 @@ Checklist:
 - Each test creates its own scope.
 - Assertions use `scope.getState`, not global store state.
 
-## 6. Migration Notes
+## 7. Migration Notes
 
 - Prefer `effector-react` modern hooks (`useUnit`) over older compat/scope-specific imports.
 - Treat old scope module usage as legacy and migrate in one coherent pass.

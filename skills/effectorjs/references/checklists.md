@@ -6,6 +6,7 @@
 - Events represent intents/facts.
 - Effects isolate all async and side effects.
 - Dataflow is declarative with `sample`/`attach`.
+- App bootstrap uses explicit start events (for example `appStarted`).
 - No hidden reads via `getState`.
 - Public model API is minimal.
 
@@ -17,13 +18,13 @@
 - Scope-sensitive flows validated.
 - Diff is split into safe incremental steps.
 
-## 3. SSR + Scope Safety Checklist
+## 3. Scope + Startup Safety Checklist
 
-- New scope per server request.
-- Preload via `allSettled` in scope.
-- State transfer via `serialize` and fork hydration.
-- UI tree wrapped in correct `Provider`.
-- No cross-request state leakage paths.
+- Startup logic is not executed at module import time.
+- Scope boundaries are explicit for SPA/test/SSR entry layers.
+- Deterministic preload uses `allSettled` where needed.
+- SSR path uses `serialize` + fork hydration and correct `Provider`.
+- No cross-run state leakage paths.
 
 ## 4. Review Checklist
 
@@ -43,14 +44,17 @@
 ### C. SSR Scope
 - Given SSR requirement, output includes request-scoped fork + serialization lifecycle.
 
-### D. React Integration
+### D. Explicit Start
+- Given startup requirement, output includes explicit `appStarted` flow and entrypoint trigger strategy.
+
+### E. React Integration
 - Given React integration, output routes unit usage through `useUnit`.
 
-### E. Solid Integration
+### F. Solid Integration
 - Given Solid integration, output routes unit usage through `useUnit` with correct accessor handling.
 
-### F. Vue Integration
+### G. Vue Integration
 - Given Vue integration, output provides modern `effector-vue` integration guidance.
 
-### G. Legacy Input
+### H. Legacy Input
 - Given legacy API usage/imports, output marks it as legacy and offers modern v23+ migration path.

@@ -10,6 +10,7 @@ Use this skill to design, refactor, and review Effector state management with mo
 
 - `SKILL.md` - trigger and workflow instructions for the agent
 - `references/core-patterns.md` - core modeling and wiring patterns
+- `references/explicit-start.md` - explicit startup patterns for SPA/SSR/tests
 - `references/react-ssr-scope.md` - React + SSR + scope guidance
 - `references/solid-scope.md` - Solid + scope guidance
 - `references/vue-scope.md` - Vue + scope guidance
@@ -21,7 +22,7 @@ Use this skill to design, refactor, and review Effector state management with mo
 
 - Model topology (stores/events/effects)
 - Declarative wiring snippets (`sample`, `attach`, `split`)
-- Scope/SSR lifecycle notes when required
+- Startup and scope lifecycle notes for SPA/SSR/tests when required
 - Test scenarios and acceptance checks
 
 ## Typical Requests

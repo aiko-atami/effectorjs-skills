@@ -62,3 +62,13 @@ Fix:
 4. Rewire with `sample`/`attach`.
 5. Add parity tests in forked scopes.
 6. Remove legacy code after parity confirmation.
+
+## 8. Startup at Import Time
+
+Anti-pattern:
+- Calling events/effects from module top-level code to start app processes.
+
+Fix:
+- Keep imports pure and initialization static.
+- Add explicit `appStarted` event and wire startup with `sample`.
+- Trigger startup from SPA/SSR/test entrypoint, not from model import.
