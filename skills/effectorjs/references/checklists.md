@@ -6,9 +6,11 @@
 - Events represent intents/facts.
 - Effects isolate all async and side effects.
 - Dataflow is declarative with `sample`/`attach`.
+- `sample` targets writable units only (not derived stores).
 - App bootstrap uses explicit start events (for example `appStarted`).
 - No hidden reads via `getState`.
 - Public model API is minimal.
+- Terminology in solution matches Effector glossary (`unit`, `derived store`, `reducer`, `watcher`, `subscription`).
 
 ## 2. Refactor Checklist (Existing Code)
 
@@ -16,6 +18,8 @@
 - `watch` logic removed or justified for debug only.
 - Side effects removed from pure computation (`map`, `.on`, pure transforms).
 - Imperative in-effect orchestration replaced.
+- Derived stores are not used as writable targets.
+- Reducers (`.on`) return explicit next state and avoid accidental no-op by mutation.
 - Scope-sensitive flows validated.
 - Diff is split into safe incremental steps.
 
@@ -32,6 +36,8 @@
 - Potential regressions listed with severity.
 - Deprecated patterns marked and migration path provided.
 - Execution order assumptions validated against computation priority.
+- Watchers/subscriptions are treated as observability/integration mechanics, not business orchestration.
+- Domain hooks (`onCreate*`) are used only for infra-level cross-cutting concerns.
 - Tests cover success/failure/branching paths.
 - Parallel-test safety validated via forked scopes.
 
@@ -42,6 +48,9 @@
 
 ### B. Anti-Pattern Refactor
 - Given logic in `watch` or `getState`, output provides declarative replacement.
+
+### B1. Glossary Semantics
+- Given model/dataflow review, output validates glossary semantics (common unit usage, derived store constraints, reducer purity/no-op behavior).
 
 ### C. SSR Scope
 - Given SSR requirement, output includes request-scoped fork + serialization lifecycle.

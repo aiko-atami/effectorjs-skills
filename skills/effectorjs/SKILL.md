@@ -46,6 +46,19 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 - Target Effector modern v23+.
 - Treat deprecated/legacy patterns as migration targets, not defaults.
 - Prefer minimal, explicit unit graph over clever abstractions.
+- Use glossary-consistent terminology in explanations and reviews.
+
+## Glossary Alignment (Effector)
+
+- `Unit`: include `Store`, `Event`, `Effect`, `Domain`, `Scope`.
+- `Common unit`: only `Store`, `Event`, `Effect` (reactive update sources for many APIs).
+- `Derived store`: read-only store built from other stores (`map`, `combine`, effect-derived stores like `.pending`).
+- `Derived store` constraints: do not mutate directly and do not use as `target` in `sample`.
+- `Reducer`: `store.on(...)` handlers must return next state; `undefined` or same reference (`===`) means no store update.
+- `Watcher`: side effects/debug observability only; watcher return value is ignored.
+- `Subscription`: treat unsubscribe handlers as infrastructure concern; avoid manual subscription management in business logic.
+- `Purity`: pure functions (`map`, `.on`, transform callbacks) must not imperatively call events/effects.
+- `Domain`: namespace for units; `onCreate*` hooks are acceptable for infra-level cross-cutting concerns (logging/instrumentation), not business orchestration.
 
 ## Guardrails
 
@@ -53,6 +66,7 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 - Respect computation priority: keep `map`/`.on` pure and avoid side effects in pure computation stages.
 - Do not call events/effects imperatively from effect bodies when declarative wiring can express the flow.
 - Do not use `$store.getState()` for business dataflow; pass state through `sample` source.
+- Do not use derived stores as `target` in `sample`; target writable units/events/effects only.
 - Do not create units dynamically at runtime.
 - Keep naming explicit (`$store`, `eventHappened`, `someFx`).
 
