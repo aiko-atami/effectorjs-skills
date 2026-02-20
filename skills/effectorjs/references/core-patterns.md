@@ -24,7 +24,13 @@ sample({
 
 Prefer separate `sample` links instead of deeply nested chains.
 
-## 3. Effect Composition with attach
+## 3. Sequencing and Priority
+
+- Treat `sample`/`guard` links as the main sequencing layer.
+- Keep `map` and `.on` pure; do not run side effects there.
+- Do not encode critical sequencing through `.watch`.
+
+## 4. Effect Composition with attach
 
 Use `attach` when an effect needs store-derived context or param mapping.
 
@@ -36,7 +42,7 @@ const submitWithSessionFx = attach({
 });
 ```
 
-## 4. Split for Branching
+## 5. Split for Branching
 
 Use `split` when one stream dispatches into named cases.
 
@@ -55,14 +61,14 @@ const routes = split({
 });
 ```
 
-## 5. Naming and Structure
+## 6. Naming and Structure
 
 - Stores: prefix `$`.
 - Effects: postfix `Fx`.
 - Events: past tense for facts when practical (`userLoaded`).
 - Export minimal public API from each model module.
 
-## 6. Minimal Design Template
+## 7. Minimal Design Template
 
 ```ts
 import { createEvent, createStore, createEffect, sample } from 'effector';
@@ -84,9 +90,10 @@ sample({
 });
 ```
 
-## 7. Review Heuristics
+## 8. Review Heuristics
 
 - Can each unit be described in one sentence?
 - Is async behavior isolated in effects?
 - Is orchestration declarative (`sample`, `attach`, `split`)?
 - Are there hidden dependencies or implicit reads?
+- Is sequencing independent from watcher timing?

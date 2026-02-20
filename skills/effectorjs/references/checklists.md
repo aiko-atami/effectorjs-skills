@@ -14,6 +14,7 @@
 
 - Legacy behavior captured before changes.
 - `watch` logic removed or justified for debug only.
+- Side effects removed from pure computation (`map`, `.on`, pure transforms).
 - Imperative in-effect orchestration replaced.
 - Scope-sensitive flows validated.
 - Diff is split into safe incremental steps.
@@ -30,6 +31,7 @@
 
 - Potential regressions listed with severity.
 - Deprecated patterns marked and migration path provided.
+- Execution order assumptions validated against computation priority.
 - Tests cover success/failure/branching paths.
 - Parallel-test safety validated via forked scopes.
 

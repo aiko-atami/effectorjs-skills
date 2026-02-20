@@ -19,6 +19,7 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 2. Load only required references:
 - Always start with `references/core-patterns.md`.
 - Add `references/explicit-start.md` when task touches app bootstrap, startup logic, initialization order, tests, scope, or SSR.
+- Add `references/computation-priority.md` when task touches ordering, `watch`, sequencing, race-like behavior, or side effects placement.
 - Add `references/react-ssr-scope.md` when React/SSR/scope appears.
 - Add `references/solid-scope.md` when Solid integration appears.
 - Add `references/vue-scope.md` when Vue integration appears.
@@ -49,6 +50,7 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 ## Guardrails
 
 - Do not place business logic in `watch`.
+- Respect computation priority: keep `map`/`.on` pure and avoid side effects in pure computation stages.
 - Do not call events/effects imperatively from effect bodies when declarative wiring can express the flow.
 - Do not use `$store.getState()` for business dataflow; pass state through `sample` source.
 - Do not create units dynamically at runtime.
