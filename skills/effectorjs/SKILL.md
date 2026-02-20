@@ -18,6 +18,7 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 
 2. Load only required references:
 - Always start with `references/core-patterns.md`.
+- Always load `references/lint-derived-best-practices.md` after core patterns to enforce plugin-backed best practices.
 - Add `references/explicit-start.md` when task touches app bootstrap, startup logic, initialization order, tests, scope, or SSR.
 - Add `references/computation-priority.md` when task touches ordering, `watch`, sequencing, race-like behavior, or side effects placement.
 - Add `references/react-ssr-scope.md` when React/SSR/scope appears.
@@ -39,6 +40,7 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 - Proposed model topology (stores/events/effects and responsibilities).
 - Wiring snippets (`sample`, `attach`, `split` if needed).
 - Scope/SSR notes when applicable.
+- Lint-derived conformance notes for naming/dataflow/scope/react constraints.
 - Test scenarios and acceptance checklist.
 
 ## Defaults
@@ -46,6 +48,7 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 - Target Effector modern v23+.
 - Treat deprecated/legacy patterns as migration targets, not defaults.
 - Prefer minimal, explicit unit graph over clever abstractions.
+- Treat lint-derived practices from `eslint-plugin-effector` as baseline constraints.
 - Use glossary-consistent terminology in explanations and reviews.
 
 ## Glossary Alignment (Effector)
@@ -63,12 +66,18 @@ Use this skill to produce deterministic, scope-safe Effector solutions for new f
 ## Guardrails
 
 - Do not place business logic in `watch`.
+- Prefer `sample` over `forward`/`guard` for orchestration.
 - Respect computation priority: keep `map`/`.on` pure and avoid side effects in pure computation stages.
 - Do not call events/effects imperatively from effect bodies when declarative wiring can express the flow.
 - Do not use `$store.getState()` for business dataflow; pass state through `sample` source.
 - Do not use derived stores as `target` in `sample`; target writable units/events/effects only.
+- Keep `sample`/`guard` options in semantic order: `clock -> source -> filter -> fn -> target`.
+- Avoid ambiguous `target` usage (no simultaneous result assignment and explicit `target`).
+- Avoid duplicate units in `clock`/`source` arrays and duplicate `.on` handlers for one store-event pair.
+- Do not use `sample`/`guard` without runtime effect (must have target or captured result).
 - Do not create units dynamically at runtime.
 - Keep naming explicit (`$store`, `eventHappened`, `someFx`).
+- In React, bind callable units with `useUnit`; avoid raw event/effect usage in JSX handlers.
 
 ## Legacy Handling
 
